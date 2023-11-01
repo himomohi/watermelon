@@ -23,7 +23,7 @@ const main = () => {
         engine,
         element: document.body,
         options: {
-            wireframes: true,
+            wireframes: false,
             background: '#F7F4C8',
             width: 620,
             height: 850,
@@ -103,7 +103,7 @@ const main = () => {
             case 'KeyD':
                 if (interval) return;
                 interval = setInterval(() => {
-                    if (currentBody.position.x + currentFruit.radius > 590)
+                    if (currentBody.position.x + currentFruit.radius < 590)
                         Body.setPosition(currentBody, {
                             x: currentBody.position.x + 1,
                             y: currentBody.position.y,
