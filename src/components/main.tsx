@@ -23,7 +23,7 @@ const main = () => {
         engine,
         element: document.body,
         options: {
-            wireframes: false,
+            wireframes: true,
             background: '#F7F4C8',
             width: 620,
             height: 850,
