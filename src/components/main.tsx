@@ -1,11 +1,11 @@
 import React from 'react';
 import { Bodies, Body, Engine, Events, Render, Runner, World } from 'matter-js';
 import { FRUITS_BASE, FRUITS_HLW } from './fruits';
-// import './dark.css';
+import './dark.css';
 
 //실행라인
 const main = () => {
-    let THEME = 'halloween'; // {base,halloween}
+    let THEME = 'base'; // {base,halloween}
     let FRUITS = FRUITS_BASE;
 
     //THEME 테마가 halloween 으로 입력되면 할로윈 버전으로
@@ -103,7 +103,7 @@ const main = () => {
             case 'KeyD':
                 if (interval) return;
                 interval = setInterval(() => {
-                    if (currentBody.position.x - currentFruit.radius > 590)
+                    if (currentBody.position.x + currentFruit.radius > 590)
                         Body.setPosition(currentBody, {
                             x: currentBody.position.x + 1,
                             y: currentBody.position.y,
@@ -133,14 +133,15 @@ const main = () => {
                 interval = null;
         }
     };
-    Events.on(engine, 'collisionStart', (enent) => {
-        enent.pairs.forEach((collision) => {
+    Events.on(engine, 'collisionStart', (event) => {
+        event.pairs.forEach((collision) => {
             if (collision.bodyA.index === collision.bodyB.index) {
                 const index = collision.bodyA.index;
 
                 if (index === FRUITS.length - 1) {
                     return;
                 }
+
                 World.remove(world, [collision.bodyA, collision.bodyB]);
 
                 const newFruit = FRUITS[index + 1];
@@ -159,6 +160,7 @@ const main = () => {
 
                 World.add(world, newBody);
             }
+
             if (!disableAction && (collision.bodyA.name === 'topLine' || collision.bodyB.name === 'topLine')) {
                 alert('Game over');
             }
