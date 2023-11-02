@@ -10,7 +10,7 @@ const main = () => {
     let FRUITS = FRUITS_BASE;
     let high = 0;
 
-    function updateScore(newScore) {
+    function highScore2(newScore) {
         let highScores = JSON.parse(localStorage.getItem('highScores')) || [];
 
         highScores.push(newScore);
@@ -26,11 +26,11 @@ const main = () => {
         const scoreElement = document.createElement('div');
         scoreElement.id = 'score'; // 점수 표시할 요소의 id 설정
         scoreElement.style.position = 'absolute';
-        scoreElement.style.top = '10px';
+        // scoreElement.style.top = '10px';
         scoreElement.style.left = '50%';
         scoreElement.style.transform = 'translateX(-50%)';
         scoreElement.style.fontSize = '24px';
-        scoreElement.style.color = 'black';
+        scoreElement.style.color = 'white';
         scoreElement.innerHTML = `점수: ${score}`;
         document.body.appendChild(scoreElement);
     }
@@ -40,7 +40,7 @@ const main = () => {
         score += points; // 점수를 증가
         const scoreElement = document.getElementById('score');
         if (scoreElement) {
-            scoreElement.innerHTML = `점수: ${score}`; // 점수를 화면에 표시
+            scoreElement.innerText = `점수: ${score}`; // 점수를 화면에 표시
         }
     }
 
@@ -62,7 +62,7 @@ const main = () => {
         engine,
         element: document.body,
         options: {
-            wireframes: false,
+            wireframes: true,
             background: '#F7F4C8',
             width: 620,
             height: 850,
@@ -206,7 +206,7 @@ const main = () => {
 
             if (!disableAction && (collision.bodyA.name === 'topLine' || collision.bodyB.name === 'topLine')) {
                 alert('Game over');
-                updateScore(score);
+                highScore2(score);
             }
         });
     });
