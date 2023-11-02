@@ -1,12 +1,51 @@
-import React from 'react';
 import { Bodies, Body, Engine, Events, Render, Runner, World } from 'matter-js';
 import { FRUITS_BASE, FRUITS_HLW } from './fruits';
 import './dark.css';
 
 //실행라인
+
 const main = () => {
+    let score = 0;
     let THEME = 'base'; // {base,halloween}
     let FRUITS = FRUITS_BASE;
+    let high = 0;
+
+    function updateScore(newScore) {
+        let highScores = JSON.parse(localStorage.getItem('highScores')) || [];
+
+        highScores.push(newScore);
+
+        highScores.sort((a, b) => b - a);
+
+        localStorage.setItem('highScores', JSON.stringify(highScores));
+
+        high += highScores;
+    }
+
+    function createScoreDisplay() {
+        const scoreElement = document.createElement('div');
+        scoreElement.id = 'score'; // 점수 표시할 요소의 id 설정
+        scoreElement.style.position = 'absolute';
+        scoreElement.style.top = '10px';
+        scoreElement.style.left = '50%';
+        scoreElement.style.transform = 'translateX(-50%)';
+        scoreElement.style.fontSize = '24px';
+        scoreElement.style.color = 'black';
+        scoreElement.innerHTML = `점수: ${score}`;
+        document.body.appendChild(scoreElement);
+    }
+
+    // 점수를 갱신하고 화면에 표시하는 함수
+    function updateScore(points) {
+        score += points; // 점수를 증가
+        const scoreElement = document.getElementById('score');
+        if (scoreElement) {
+            scoreElement.innerHTML = `점수: ${score}`; // 점수를 화면에 표시
+        }
+    }
+
+    // 점수 표시를 위한 HTML 요소를 생성하는 함수 호출
+    createScoreDisplay();
 
     //THEME 테마가 halloween 으로 입력되면 할로윈 버전으로
     switch (THEME) {
@@ -143,9 +182,12 @@ const main = () => {
                     return;
                 }
 
+                //점수추가
+
                 World.remove(world, [collision.bodyA, collision.bodyB]);
 
                 const newFruit = FRUITS[index + 1];
+                updateScore(newFruit.score);
 
                 const newBody = Bodies.circle(
                     collision.collision.supports[0].x,
@@ -164,12 +206,17 @@ const main = () => {
 
             if (!disableAction && (collision.bodyA.name === 'topLine' || collision.bodyB.name === 'topLine')) {
                 alert('Game over');
+                updateScore(score);
             }
         });
     });
     addFruit();
 
-    //   return <div></div>;
+    return (
+        <>
+            <div>최고점수 :{high}</div>
+        </>
+    );
 };
 
 export default main;
