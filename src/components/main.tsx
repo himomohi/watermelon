@@ -173,7 +173,7 @@ const main = () => {
   });
   addFruit();
 
-  return <div></div>;
+  //   return <div></div>;
 };
 
 export default main;
