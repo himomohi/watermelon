@@ -89,6 +89,7 @@ const main = () => {
     const topLine = Bodies.rectangle(310, 150, 620, 2, {
         isStatic: true,
         isSensor: true,
+        label: 'topLine',
         render: { fillStyle: '#0d0c09' },
     });
 
@@ -158,7 +159,7 @@ const main = () => {
                 setTimeout(() => {
                     addFruit();
                     disableAction = false;
-                }, 1000);
+                }, 200);
 
                 break;
         }
@@ -203,10 +204,18 @@ const main = () => {
 
                 World.add(world, newBody);
             }
+            // 충돌하는 객체 중 하나가 topLine일 경우를 확인합니다.
+            const collidedWithTopLine = collision.bodyA === topLine || collision.bodyB === topLine;
+            const otherBody = collision.bodyA === topLine ? collision.bodyB : collision.bodyA;
 
-            if (!disableAction && (collision.bodyA.name === 'topLine' || collision.bodyB.name === 'topLine')) {
-                alert('Game over');
+            // topLine과 충돌한 객체가 위로 올라가고 있는지 확인합니다. (y 방향 속도가 음수일 경우)
+            const isMovingUpwards = otherBody.velocity.y < 0 && !otherBody.isStatic;
+
+            // 만약 topLine에 닿았고, 객체가 위로 올라가고 있다면 게임 오버 처리를 합니다.
+            if (collidedWithTopLine && isMovingUpwards) {
+                alert('게임 오버!');
                 highScore2(score);
+                // 게임을 재시작하거나, 페이지를 새로고침하는 로직을 추가할 수 있습니다.
             }
         });
     });
