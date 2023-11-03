@@ -4,19 +4,14 @@ import './dark.css';
 
 //실행라인
 
-interface Scores {
-    newScore: number;
-    highScores: number;
-}
-
 const main = () => {
     let score = 0;
-    const THEME: string = 'base'; // {base,halloween}
+    let THEME = 'base'; // {base,halloween}
     let FRUITS = FRUITS_BASE;
     let high = 0;
 
-    function highScore2(newScore: Scores) {
-        const highScores = JSON.parse(localStorage.getItem('highScores')) || [];
+    function highScore2(newScore) {
+        let highScores = JSON.parse(localStorage.getItem('highScores')) || [];
 
         highScores.push(newScore);
 
@@ -41,7 +36,7 @@ const main = () => {
     }
 
     // 점수를 갱신하고 화면에 표시하는 함수
-    function updateScore(points: number) {
+    function updateScore(points) {
         score += points; // 점수를 증가
         const scoreElement = document.getElementById('score');
         if (scoreElement) {
@@ -104,10 +99,10 @@ const main = () => {
     Runner.run(engine); //런너
 
     //값 초기화
-    let currentBody: Body | null = null;
-    let currentFruit: number | null = null;
+    let currentBody = null;
+    let currentFruit = null;
     let disableAction = false;
-    let interval: number | null = null;
+    let interval = null;
 
     //과일추가
     function addFruit() {
@@ -164,7 +159,7 @@ const main = () => {
                 setTimeout(() => {
                     addFruit();
                     disableAction = false;
-                }, 1000);
+                }, 200);
 
                 break;
         }
