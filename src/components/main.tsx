@@ -9,7 +9,16 @@ interface Scores {
   highScores: number;
 }
 
+interface Scores {
+  newScore: number;
+  highScores: number;
+}
+
 const main = () => {
+  let score = 0;
+  const THEME: string = "base"; // {base,halloween}
+  let FRUITS = FRUITS_BASE;
+  let high = 0;
   let score = 0;
   let THEME = "base"; // {base,halloween}
   let FRUITS = FRUITS_BASE;
@@ -41,7 +50,7 @@ const main = () => {
   }
 
   // 점수를 갱신하고 화면에 표시하는 함수
-  function updateScore(points) {
+  function updateScore(points: number) {
     score += points; // 점수를 증가
     const scoreElement = document.getElementById("score");
     if (scoreElement) {
