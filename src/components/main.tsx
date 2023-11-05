@@ -9,16 +9,7 @@ interface Scores {
   highScores: number;
 }
 
-interface Scores {
-  newScore: number;
-  highScores: number;
-}
-
 const main = () => {
-  let score = 0;
-  const THEME: string = "base"; // {base,halloween}
-  let FRUITS = FRUITS_BASE;
-  let high = 0;
   let score = 0;
   let THEME = "base"; // {base,halloween}
   let FRUITS = FRUITS_BASE;
@@ -173,7 +164,7 @@ const main = () => {
         setTimeout(() => {
           addFruit();
           disableAction = false;
-        }, 200);
+        }, 1000);
 
         break;
     }
