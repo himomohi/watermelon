@@ -4,6 +4,11 @@ import "./dark.css";
 
 //실행라인
 
+interface Scores {
+  newScore: number;
+  highScores: number;
+}
+
 const main = () => {
   let score = 0;
   let THEME = "base"; // {base,halloween}
