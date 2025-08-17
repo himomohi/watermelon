@@ -4,27 +4,32 @@ import "./dark.css";
 
 //실행라인
 
-interface Scores {
-  newScore: number;
-  highScores: number;
-}
-
-const main = () => {
+const startGame = (theme) => {
   let score = 0;
-  let THEME = "base"; // {base,halloween}
+  const THEME = theme || "base"; // {base,halloween}
   let FRUITS = FRUITS_BASE;
-  let high = 0;
+
+  // Cleanup previous instance
+  const existingCanvas = document.querySelector("canvas");
+  if (existingCanvas) {
+    existingCanvas.remove();
+  }
+  const scoreElement = document.getElementById("score");
+  if (scoreElement) {
+    scoreElement.remove();
+  }
+  // Remove existing event listeners to prevent duplicates
+  window.onkeydown = null;
+  window.onkeyup = null;
 
   function highScore2(newScore) {
-    let highScores = JSON.parse(localStorage.getItem("highScores")) || [];
+    const highScores = JSON.parse(localStorage.getItem("highScores")) || [];
 
     highScores.push(newScore);
 
     highScores.sort((a, b) => b - a);
 
     localStorage.setItem("highScores", JSON.stringify(highScores));
-
-    high += highScores;
   }
 
   function createScoreDisplay() {
@@ -67,8 +72,8 @@ const main = () => {
     engine,
     element: document.body,
     options: {
-      wireframes: true,
-      background: "#F7F4C8",
+      wireframes: false,
+      background: "#242424",
       width: 620,
       height: 850,
     },
@@ -227,12 +232,6 @@ const main = () => {
     });
   });
   addFruit();
-
-  return (
-    <>
-      <div>최고점수 :{high}</div>
-    </>
-  );
 };
 
-export default main;
+export default startGame;

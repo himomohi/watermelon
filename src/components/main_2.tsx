@@ -6,12 +6,12 @@ import './dark.css';
 
 const main = () => {
     let score = 0;
-    let THEME = 'base'; // {base,halloween}
+    const THEME = 'base'; // {base,halloween}
     let FRUITS = FRUITS_BASE;
     let high = 0;
 
     function highScore2(newScore) {
-        let highScores = JSON.parse(localStorage.getItem('highScores')) || [];
+        const highScores = JSON.parse(localStorage.getItem('highScores')) || [];
 
         highScores.push(newScore);
 
